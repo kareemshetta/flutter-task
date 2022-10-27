@@ -41,7 +41,12 @@ class ProductScreen extends StatelessWidget {
             listener: (context, state) {},
             builder: (context, state) {
               final productList = ProductCubit.get(context).products;
-              if (state is GetAllProductSuccessState &&
+
+              if (state is GetAllProductLoadingState) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (state is GetAllProductSuccessState &&
                   productList.isNotEmpty) {
                 return SingleChildScrollView(
                   child: Column(
@@ -111,7 +116,7 @@ class ProductScreen extends StatelessWidget {
                 );
               } else {
                 return Center(
-                  child: CircularProgressIndicator(),
+                  child: Text('opp! some error happened'),
                 );
               }
             }),
